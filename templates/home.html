@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block page_title %} Tranquilist {% endblock %}
+
+{% block page_content %}
+    <h1>Tranquilist</h1>
+    <blockquote id="daily-quote">{{ quote.text }}</blockquote>
+
+    <h2>Upcoming:</h2>
+    <section>
+        <h2>Today</h2>
+        <ul class='today'>
+
+        </ul>
+    </section>
+    <section>
+        <h2>Soon</h2>
+        <ul class='soon'>
+
+        </ul>
+    </section>
+    <section>
+        <h2>Eventually</h2>
+        <ul class='eventually'>
+
+        </ul>
+    </section>
+    <section>
+        <h2>Calendar</h2>
+        <ul id="calendar-events">
+            {% for event in events %}
+
+            <li>{{ event['start'], event['summary'], event['htmlLink'] }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}
