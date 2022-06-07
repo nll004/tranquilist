@@ -23,12 +23,24 @@ class User(db.Model):
     email = db.Column(db.Text, nullable=False, unique=True)
     hashed_pwd = db.Column(db.Text, nullable=False)
 
-    tasks = db.relationship('Tasks', backref='user')
+    tasks = db.relationship('Task', backref='user', passive_deletes=True)
 
-    lists = db.relationship('Lists', backref='user')
+    lists = db.relationship('List', backref='user' passive_deletes=True)
 
 
-class Tasks(db.Model):
+class List(db.Model):
+    '''Task lists for grouping individual tasks.
+    Ex: Bills, Grocery List, Do Today, Homework, etc. '''
+
+    __tablename__ = 'lists'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(25), nullable=False)
+    user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='cascade'))
+    sublist_id = db.Column(db.Integer, default=3)
+
+
+class Task(db.Model):
     '''Stored tasks'''
 
     __tablename__ = 'tasks'
@@ -36,18 +48,7 @@ class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     item = db.Column(db.String(30), nullable=False)
     details = db.Column(db.String(100), nullable=True)
-    list_id = db.Column(db.Integer, db.ForeignKey('lists.id', ondelete='cascade'))
-    user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='cascade'))
+    list_id = db.Column(db.Integer, db.ForeignKey('lists.id', ondelete='cascade'), nullable=False)
+    user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='cascade'), nullable=False)
 
-    lists = db.relationship('Lists', backref='tasks')
-
-
-class Lists(db.Model):
-    '''Task lists for task grouping'''
-
-    __tablename__ = 'lists'
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(25), nullable=False)
-    user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='cascade'), primary_key=True)
-    sublist_id = db.Column(db.Integer, default=3)
+    lists = db.relationship('List', backref='tasks', passive_deletes=True)
