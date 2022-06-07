@@ -21,32 +21,33 @@ class User(db.Model):
     fname = db.Column(db.String(35), nullable=False)
     lname = db.Column(db.String(45), nullable=False)
     email = db.Column(db.Text, nullable=False, unique=True)
-    hashed_pwd =
+    hashed_pwd = db.Column(db.Text, nullable=False)
+
+    tasks = db.relationship('Tasks', backref='user')
+
+    lists = db.relationship('Lists', backref='user')
 
 
-class Playlist(db.Model):
-    """Playlist."""
+class Tasks(db.Model):
+    '''Stored tasks'''
 
-    __tablename__ = 'playlists'
+    __tablename__ = 'tasks'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.Text, nullable=False)
-    description = db.Column(db.String(150), nullable=True)
+    item = db.Column(db.String(30), nullable=False)
+    details = db.Column(db.String(100), nullable=True)
+    list_id = db.Column(db.Integer, db.ForeignKey('lists.id', ondelete='cascade'))
+    user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='cascade'))
 
-    # assign_variable_method = db.relationship('name_of_related_Model',
-    #                       secondary='name of intermediary or connecting table',
-    #                       backref='self assigned variable to use if backreferencing the playlist model')
-    songs = db.relationship('Song', secondary='playlists_songs', backref='playlist')
+    lists = db.relationship('Lists', backref='tasks')
 
-    user_being_followed_id = db.Column(
-        db.Integer,
-        db.ForeignKey('users.id', ondelete="cascade"),
-        primary_key=True,
-    )
-    following = db.relationship(
-        "User",
-        secondary="follows",
-        primaryjoin=(Follows.user_following_id == id),
-        secondaryjoin=(Follows.user_being_followed_id == id),
-        passive_deletes=True
-    )
+
+class Lists(db.Model):
+    '''Task lists for task grouping'''
+
+    __tablename__ = 'lists'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(25), nullable=False)
+    user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='cascade'), primary_key=True)
+    sublist_id = db.Column(db.Integer, default=3)
