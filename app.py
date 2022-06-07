@@ -1,17 +1,16 @@
 from flask import Flask, render_template
 from apis import get_events, get_quote
-# from models import connect_db, db
+from models import connect_db, db
 
 
 app = Flask(__name__)
 
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///tranquilist'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['SQLALCHEMY_ECHO'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///tranquilist'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ECHO'] = True
 
-
-# connect_db(app)
+connect_db(app)
 
 @app.route('/')
 def display_home():

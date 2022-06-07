@@ -25,7 +25,7 @@ class User(db.Model):
 
     tasks = db.relationship('Task', backref='user', passive_deletes=True)
 
-    lists = db.relationship('List', backref='user' passive_deletes=True)
+    lists = db.relationship('List', backref='user', passive_deletes=True)
 
 
 class List(db.Model):

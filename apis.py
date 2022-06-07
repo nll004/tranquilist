@@ -1,5 +1,5 @@
 from requests import request
-from keys import rapidAPI_key
+from keys import quote_API_key
 
 import datetime
 import os.path
@@ -50,16 +50,32 @@ def get_events():
         now_str = now.isoformat() + 'Z'  # 'Z' indicates UTC time
         next_week_str = next_week.isoformat() + 'Z'
 
-        # Call the Calendar API
-        user_events = service.events().list(calendarId='primary', timeMin=now_str, timeMax=next_week_str,
-                                              singleEvents=True, orderBy='startTime').execute()
-        events = user_events.get('items', [])
+        # Call the Calendar API for personal events in the next 7 days
+        next_page_token = None
+        all_events = []
+        while True:
+            user_events = service.events().list(calendarId='primary', timeMin=now_str, timeMax=next_week_str,
+                                                singleEvents=True, orderBy='startTime', pageToken=next_page_token).execute()
+            for event in user_events['items']:
+                all_events.append(event)
+            next_page_token = user_events.get('nextPageToken')
+            if not next_page_token:
+                break
 
-        if not events:
-            print('No upcoming events found.')
+        # API Call 2 - Google holiday calendar for public holidays in the next 7 days
+        public_events = service.events().list(calendarId='en.usa#holiday@group.v.calendar.google.com',
+                                                timeMin=now_str, timeMax=next_week_str,
+                                                singleEvents=True, orderBy='startTime').execute()
+        if public_events:
+            for event in public_events['items']:
+                # added holiday to object to help distinguish it from other events
+                # event['holiday'] = True
+                # print(event)
+                all_events.append(event)
+        else:
             return
 
-        return events
+        return all_events
 
     except HttpError as error:
         print('An error occurred: %s' % error)
@@ -80,7 +96,7 @@ def get_quote():
     headers = {
 		"content-type": "application/json",
 		"X-RapidAPI-Host": "motivational-quotes1.p.rapidapi.com",
-        "X-RapidAPI-Key": rapidAPI_key
+        "X-RapidAPI-Key": quote_API_key
 	}
 
     response = request("POST", base_url, json=payload, headers=headers)
