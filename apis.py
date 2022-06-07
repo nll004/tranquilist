@@ -81,7 +81,6 @@ def get_events():
         print('An error occurred: %s' % error)
 
 
-
 # 5/26/22. Code retrieved from: https://rapidapi.com/bitbiscuit-bitbiscuit-default/api/motivational-quotes1/
 def get_quote():
     '''Get quote from rapidapi'''

@@ -19,6 +19,7 @@ def display_home():
 	quote = get_quote()
 	calendar_events = get_events()
 
+
 	# for event in calendar_events:
 		# date = event['start']
 		# summary = event['summary']
