@@ -25,19 +25,13 @@ class User(db.Model):
 
     tasks = db.relationship('Task', backref='user', passive_deletes=True)
 
-    lists = db.relationship('List', backref='user', passive_deletes=True)
+class TimeLine(db.Model):
+    '''Groups the tasks into a category or time line. Ex: Today, Soon, Later, etc.'''
 
-
-class List(db.Model):
-    '''Task lists for grouping individual tasks.
-    Ex: Bills, Grocery List, Do Today, Homework, etc. '''
-
-    __tablename__ = 'lists'
+    __tablename__ = 'time_lines'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(25), nullable=False)
-    user_username = db.Column(db.String(20), db.ForeignKey('users.username', ondelete='cascade'))
-    sublist_id = db.Column(db.Integer, default=3)
 
 
 class Task(db.Model):
@@ -48,7 +42,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     item = db.Column(db.String(30), nullable=False)
     details = db.Column(db.String(100), nullable=True)
-    list_id = db.Column(db.Integer, db.ForeignKey('lists.id', ondelete='cascade'), nullable=False)
+    time_line_id = db.Column(db.Integer, db.ForeignKey('lists.id', ondelete='cascade'), nullable=False)
     user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='cascade'), nullable=False)
 
-    lists = db.relationship('List', backref='tasks', passive_deletes=True)
+    time = db.relationship('TimeLine', backref='tasks', passive_deletes=True)
