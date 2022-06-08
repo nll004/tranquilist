@@ -36,7 +36,7 @@ class List(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(25), nullable=False)
-    user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='cascade'))
+    user_username = db.Column(db.String(20), db.ForeignKey('users.username', ondelete='cascade'))
     sublist_id = db.Column(db.Integer, default=3)
 
 

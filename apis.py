@@ -1,8 +1,8 @@
 from requests import request
-from keys import quote_API_key
-
 import datetime
 import os.path
+
+from keys import quote_API_key
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials

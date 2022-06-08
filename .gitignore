@@ -4,3 +4,4 @@ credentials.json
 /__pycache__
 token.json
 /keys.py
+/tests

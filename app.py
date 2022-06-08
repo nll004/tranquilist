@@ -2,7 +2,6 @@ from flask import Flask, render_template
 from apis import get_events, get_quote
 from models import connect_db, db
 
-
 app = Flask(__name__)
 
 
@@ -14,16 +13,24 @@ connect_db(app)
 
 @app.route('/')
 def display_home():
-	'''Display home for user'''
+	'''Display info page for new users'''
 
+	return render_template('home.html')
+
+# @app.route('/signup')
+
+# @app.route('/login')
+
+@app.route('/mylists')
+def show_user_page():
+	'''User page after logging in. Show tasks and events.'''
+
+	# if invalid user redirect to login or signup
+
+	# if valid user and authenticated
+	# get user and retrieve tasks/lists
 	quote = get_quote()
 	calendar_events = get_events()
 
-
-	# for event in calendar_events:
-		# date = event['start']
-		# summary = event['summary']
-		# link = event['htmlLink']
-		# print('===================================Terminal:', start, summary, link)
 
 	return render_template('home.html', quote = quote, events = calendar_events)
