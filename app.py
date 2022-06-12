@@ -96,7 +96,8 @@ def go_sign_up():
 def show_user_page():
 	'''User page after logging in. Show tasks and events.'''
 
-	# this method cant confirm user unless flask sesssions is working
+	if not g.user:
+		return redirect('/')
 	# if correct user then display page else redirect to login
 
 

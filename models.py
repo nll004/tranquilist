@@ -44,7 +44,6 @@ class User(db.Model):
         if user and correct_pwd:
             return user
         else:
-
             return False
 
     @classmethod

@@ -19,7 +19,7 @@ class AddUserForm(FlaskForm):
 class AuthenticateForm(FlaskForm):
     '''Form for user login'''
 
-    username = StringField('Username', validators=[InputRequired(), Length(min=6, max=20)])
+    username = StringField('Username', validators=[InputRequired(), Length(min=6, max=20, message='Username must be between 6 and 20 characters long.')])
     password = PasswordField('Password', validators=[InputRequired(), Length(min=8)])
 
 
