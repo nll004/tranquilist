@@ -7,23 +7,22 @@
     <a href="/logout">Log Out</a>
     <hr>
     <h1>TranquiList</h1>
-    <p>Welcome {{ user.username }}</p>
+    <p>Welcome {{ user.fname }}</p>
     <blockquote id="daily-quote">{{ quote.text }}</blockquote>
 
     <h2>Upcoming Tasks:</h2>
     <section>
         <h2>Today</h2>
         <ul class='today'>
-            {% for task in user.tasks %}
-                {% if task.time_line_id == 1 %}
-                    <li>Task: {{ task.item }}
-                        <p> Details: {{ task.details }} </p>
-                    </li>
-                {% endif %}
-            {% endfor %}
             {% for list in user.lists %}
                 {% if list.time_line_id == 1 %}
-                    <li>List: {{ list.name }}</li>
+                    <li>List: {{ list.name }}
+                        {% for task in list.subtasks %}
+                            <ul>
+                                <li>Subtask: {{ task.name }} Details: {{ task.details }} Complete: {{ task.complete }}</li>
+                            </ul>
+                        {% endfor %}
+                    </li>
                 {% endif %}
             {% endfor %}
         </ul>
@@ -31,14 +30,15 @@
     <section>
         <h2>Soon</h2>
         <ul class='soon'>
-            {% for task in user.tasks %}
-                {% if task.time_line_id == 2 %}
-                    <li>Task: {{ task.item }} Details: {{ task.details }} </li>
-                {% endif %}
-            {% endfor %}
             {% for list in user.lists %}
                 {% if list.time_line_id == 2 %}
-                    <li>List: {{ list.name }}</li>
+                    <li>List: {{ list.name }}
+                        {% for task in list.subtasks %}
+                            <ul>
+                                <li>Subtask: {{ task.name }} Details: {{ task.details }} Complete: {{ task.complete }}</li>
+                            </ul>
+                        {% endfor %}
+                    </li>
                 {% endif %}
             {% endfor %}
         </ul>
@@ -46,23 +46,15 @@
     <section>
         <h2>Later</h2>
         <ul class='eventually'>
-            {% for task in user.tasks %}
-                {% if task.time_line_id == 2 %}
-                    <li>Task: {{ task.item }} Details: {{ task.details }}</li>
-                {% endif %}
-            {% endfor %}
-
             {% for list in user.lists %}
-                {% if list.time_line_id == 3 %}
-                <li>List: {{ list.name }}
-                    {% for task in user.tasks %}
-                        {% if task.list_id == list.id %}
-                        <ul>
-                            <li>Subtask: {{ task.item }} Details: {{ task.details }} </li>
-                        </ul>
-                        {% endif %}
-                    {% endfor %}
-                </li>
+                {% if list.time_line_id == 1 %}
+                    <li>List: {{ list.name }}
+                        {% for task in list.subtasks %}
+                            <ul>
+                                <li>Subtask: {{ task.name }} Details: {{ task.details }} Complete: {{ task.complete }}</li>
+                            </ul>
+                        {% endfor %}
+                    </li>
                 {% endif %}
             {% endfor %}
         </ul>

@@ -1,17 +1,17 @@
-from flask import Flask, render_template, redirect, session
-from apis import get_events, get_quote
+from flask import Flask, render_template, redirect, session, g
+from apis import get_calendar_events, get_quote
 from models import connect_db, db, User
 from forms import AddUserForm, AuthenticateForm
 from keys import secret_key
-
-CURRENT_USERNAME = None
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///tranquilist'
 app.config['SECRET_KEY'] = secret_key
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = True
+app.config['SQLALCHEMY_ECHO'] = False
+
+CURRENT_USER = 'username'
 
 connect_db(app)
 
@@ -19,29 +19,47 @@ connect_db(app)
 def login(username):
 	'''Take username and store in session.'''
 
-	# g.user = User.query.get(username)
-	# print('G USER: =====================', g.user)
-
-	CURRENT_USERNAME = username
-	print('Current username:', CURRENT_USERNAME)
-
-	session[CURRENT_USERNAME] = CURRENT_USERNAME
-	print('Username added to session?')
-	print(session[CURRENT_USERNAME])
+	session[CURRENT_USER] = username
 
 
-#  Logout not working ===================================================================
+@app.before_request
+def add_user_to_g():
+	'''If logged in, add current user to Flask global object.'''
+
+	if CURRENT_USER in session:
+		g.user = User.query.get(session['username'])
+	else:
+		g.user = None
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def user_login():
+	'''Display login form and handle authentication'''
+
+	form = AuthenticateForm()
+
+	if form.validate_on_submit():
+		username = form.username.data
+		password = form.password.data
+
+		user = User.authenticate(username=username, pwd=password)
+
+		if user:
+			login(user.username)
+			return redirect("/mylists")
+		else:
+			form.username.errors = ["Incorrect username or password"]
+
+	return render_template('login.html', form=form)
+
+
 @app.route('/logout')
 def logout():
 	'''Remove user from session and g.user'''
 
-	print('Before logout session', session.get('CURRENT_USERNAME'))
-	if CURRENT_USERNAME in session:
-		print('Current username is in session---')
+	if CURRENT_USER in session:
+		del session[CURRENT_USER]
 
-		del session[CURRENT_USERNAME]
-	print('No the current username is not in the session')
-	print('aFTER LOGOUT==========', session[CURRENT_USERNAME])
 	return redirect('/')
 
 
@@ -74,60 +92,19 @@ def go_sign_up():
 	return render_template('register.html', form=form)
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def user_login():
-	'''Display login form and handle authentication'''
-
-	form = AuthenticateForm()
-
-	if form.validate_on_submit():
-		username = form.username.data
-		password = form.password.data
-
-		user = User.authenticate(username=username, pwd=password)
-
-		if user:
-			login(user.username)
-			return redirect("/mylists")
-		else:
-			form.username.errors = ["Incorrect username or password"]
-
-	return render_template('login.html', form=form)
-
-
-# @app.route('/mylists')
-# def show_user_page():
-# 	'''User page after logging in. Show tasks and events.'''
-
-# 	# if correct user then display
-# 	# print("List home with G User? =========================", g.user)
-# 	user = User.query.get(CURRENT_USERNAME)
-# 	print('CURRENT USER:', CURRENT_USERNAME)
-# 	print('QUERIED USER', user)
-# 	# if invalid user redirect to login or signup
-
-# 	# if valid user and authenticated
-# 	# get user and retrieve tasks/lists
-# 	quote = get_quote()
-# 	calendar_events = get_events()
-
-# 	return render_template('user_home.html', quote = quote, events = calendar_events)
-
-
-@app.route('/mylists/<username>')
-def show_user_page(username):
+@app.route('/mylists')
+def show_user_page():
 	'''User page after logging in. Show tasks and events.'''
 
 	# this method cant confirm user unless flask sesssions is working
 	# if correct user then display page else redirect to login
-	user = User.query.get(username)
-	print('CURRENT USER:', CURRENT_USERNAME)
-	print('QUERIED USER', user)
+
+
 	# if invalid user redirect to login or signup
 
 	# if valid user and authenticated
 	# get user and retrieve tasks/lists
 	quote = get_quote()
-	calendar_events = get_events()
+	calendar_events = get_calendar_events()
 
-	return render_template('user_home.html', quote = quote, events = calendar_events, user=user)
+	return render_template('user_home.html', quote = quote, events = calendar_events, user=g.user)

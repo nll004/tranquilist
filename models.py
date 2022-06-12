@@ -23,8 +23,7 @@ class User(db.Model):
     email = db.Column(db.Text, nullable=False, unique=True)
     hashed_pwd = db.Column(db.Text, nullable=False)
 
-    tasks = db.relationship('Task', backref='user', cascade='all, delete', passive_deletes=True)
-    lists = db.relationship('List', backref='user', cascade='all, delete', passive_deletes=True)
+    lists = db.relationship('TaskList', backref='user', cascade='all, delete', passive_deletes=True)
 
     @classmethod
     def register_user(cls, username, fname, lname, email, pwd):
@@ -67,29 +66,27 @@ class TimeLine(db.Model):
 
 
 class Task(db.Model):
-    '''Stored tasks'''
+    '''Subtasks in lists'''
 
     __tablename__ = 'tasks'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    item = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String(30), nullable=False)
     details = db.Column(db.String(100), nullable=True)
-    list_id = db.Column(db.Integer, db.ForeignKey('lists.id'))
-    time_line_id = db.Column(db.Integer, db.ForeignKey('time_lines.id'))
-    user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='CASCADE'), nullable=False)
-
-    time_line = db.relationship('TimeLine', backref='tasks')
+    complete = db.Column(db.Boolean, default=False, nullable=False)
+    list_id = db.Column(db.Integer, db.ForeignKey('task_lists.id', ondelete='CASCADE'), nullable=False)
 
 
-class List(db.Model):
+class TaskList(db.Model):
     '''Task lists that are located somewhere on the to do timeline and can also hold individual tasks'''
 
-    __tablename__ = 'lists'
+    __tablename__ = 'task_lists'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(30), nullable=False)
+    complete = db.Column(db.Boolean, default=False, nullable=False)
     time_line_id = db.Column(db.Integer, db.ForeignKey('time_lines.id'), default=3, nullable=False)
     user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='CASCADE'), nullable=False)
 
-    tasks = db.relationship('Task', backref='list', cascade='all, delete', passive_deletes=True)
+    subtasks = db.relationship('Task', backref='tasklists', cascade='all, delete', passive_deletes=True)
     time_line = db.relationship('TimeLine', backref='lists')
