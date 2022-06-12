@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
-
-{% block page_title %} Tranquilist Home {% endblock %}
+<link rel="stylesheet" href="/static/style.css">
+{% block page_title %} Tranquilist {% endblock %}
 
 {% block page_content %}
+
     <h1>TranquiList</h1>
-    <p>The laid back task manager app</p>
+
+    {% if g.user %}
+    <a href="/mylists">My Tasks</a>
+    <a href="/logout">Logout</a>
+    {% else %}
     <a href="/register">Sign Up</a>
     <a href="/login">Login</a>
+    {% endif %}
+    <p>The laid back task manager app</p>
 {% endblock %}

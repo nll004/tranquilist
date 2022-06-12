@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, session, g
 from apis import get_calendar_events, get_quote
-from models import connect_db, db, User
+from models import TaskList, TimeLine, connect_db, db, User
 from forms import AddUserForm, AuthenticateForm
 from keys import secret_key
 
@@ -100,6 +100,7 @@ def show_user_page():
 		return redirect('/')
 	# if correct user then display page else redirect to login
 
+	time_lines = TimeLine.query.all()
 
 	# if invalid user redirect to login or signup
 
@@ -109,3 +110,18 @@ def show_user_page():
 	calendar_events = get_calendar_events()
 
 	return render_template('user_home.html', quote = quote, events = calendar_events, user=g.user)
+
+# Server request using AJAX
+# ======================================================================
+
+@app.route('/lists/<int:list_id>', methods=['POST', 'PATCH', 'DELETE'])
+def modify_tasklists(list_id):
+	'''Create, edit or delete a task list'''
+
+	# if request validated
+	# Ideas: generate a token with AJAX, store in session, send request with token
+	# On server side pull the request from the session and compare the tokens?
+
+	list = TaskList.query.get(list_id)
+
+	# if successful request then respond

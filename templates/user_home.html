@@ -16,7 +16,7 @@
         <ul class='today'>
             {% for list in user.lists %}
                 {% if list.time_line_id == 1 %}
-                    <li>List: {{ list.name }}
+                    <li>Task: {{ list.name }}  Complete: {{ list.complete }}
                         {% for task in list.subtasks %}
                             <ul>
                                 <li>Subtask: {{ task.name }} Details: {{ task.details }} Complete: {{ task.complete }}</li>
@@ -32,7 +32,7 @@
         <ul class='soon'>
             {% for list in user.lists %}
                 {% if list.time_line_id == 2 %}
-                    <li>List: {{ list.name }}
+                    <li>Task: {{ list.name }}  Complete: {{ list.complete }}
                         {% for task in list.subtasks %}
                             <ul>
                                 <li>Subtask: {{ task.name }} Details: {{ task.details }} Complete: {{ task.complete }}</li>
@@ -48,7 +48,7 @@
         <ul class='eventually'>
             {% for list in user.lists %}
                 {% if list.time_line_id == 1 %}
-                    <li>List: {{ list.name }}
+                    <li>Task: {{ list.name }} Complete: {{ list.complete }}
                         {% for task in list.subtasks %}
                             <ul>
                                 <li>Subtask: {{ task.name }} Details: {{ task.details }} Complete: {{ task.complete }}</li>

@@ -14,6 +14,4 @@ This task manager calls Google Calendar API to display upcoming events and holid
 
 Google Calendar API: https://developers.google.com/calendar/api
 
-Motivational Quote API:
-
-https://rapidapi.com/bitbiscuit-bitbiscuit-default/api/motivational-quotes1/details
+Motivational Quote API: https://rapidapi.com/bitbiscuit-bitbiscuit-default/api/motivational-quotes1/details
