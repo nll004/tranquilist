@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
+<link rel="stylesheet" href="/static/user_home.css">
 
 {% block page_title %} My TranquiList {% endblock %}
 
 {% block page_content %}
+    <h1>TranquiList</h1>
     <a href="/">Home</a>
     <a href="/logout">Log Out</a>
     <hr>
-    <h1>TranquiList</h1>
+
     <p>Welcome {{ user.fname }}</p>
     <blockquote id="daily-quote">{{ quote.text }}</blockquote>
 
     <h2>Upcoming Tasks:</h2>
     <section>
-        <h2>Today</h2>
+        <h3>Today</h3>
         <ul class='today'>
             {% for list in user.lists %}
                 {% if list.time_line_id == 1 %}
@@ -28,7 +30,7 @@
         </ul>
     </section>
     <section>
-        <h2>Soon</h2>
+        <h3>Soon</h3>
         <ul class='soon'>
             {% for list in user.lists %}
                 {% if list.time_line_id == 2 %}
@@ -44,7 +46,7 @@
         </ul>
     </section>
     <section>
-        <h2>Later</h2>
+        <h3>Later</h3>
         <ul class='eventually'>
             {% for list in user.lists %}
                 {% if list.time_line_id == 1 %}
@@ -62,7 +64,7 @@
 
     </section>
     <section id="calendar-sect">
-        <h2>Calendar</h2>
+        <h3>Calendar</h3>
         <ul id="calendar-events">
             {% for event in events %}
                 {% if event['start'].date %}

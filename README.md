@@ -1,5 +1,6 @@
 # TranquiList
 Springboard Software Engineering BootCamp - Cohort Jan 2022
+Started: June 2022
 
 ## Assignment
 **Capstone Project 1**

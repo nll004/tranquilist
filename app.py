@@ -1,4 +1,6 @@
 from flask import Flask, render_template, redirect, session, g
+from requests import request
+from rsa import sign
 from apis import get_calendar_events, get_quote
 from models import TaskList, TimeLine, connect_db, db, User
 from forms import AddUserForm, AuthenticateForm
@@ -67,7 +69,10 @@ def logout():
 def display_home():
 	'''Display info page for new users'''
 
-	return render_template('app_home.html')
+	signup_form = AddUserForm()
+	login_form = AuthenticateForm()
+
+	return render_template('app_home.html', signup_form=signup_form, login_form=login_form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -114,7 +119,7 @@ def show_user_page():
 # Server request using AJAX
 # ======================================================================
 
-@app.route('/lists/<int:list_id>', methods=['POST', 'PATCH', 'DELETE'])
+@app.route('/lists/<int:list_id>/edit', methods=['POST', 'PATCH', 'DELETE'])
 def modify_tasklists(list_id):
 	'''Create, edit or delete a task list'''
 

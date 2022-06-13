@@ -1,17 +1,60 @@
 {% extends 'base.html' %}
-<link rel="stylesheet" href="/static/style.css">
+
+{% block head_content %}
+<link rel="stylesheet" href="/static/app_home.css">
+{% endblock %}
+
 {% block page_title %} Tranquilist {% endblock %}
 
 {% block page_content %}
+    <header>
+        <h1>Tranqui<span>List</span></h1>
+        <nav>
+            {% if g.user %}
+            <ul>
+                <li><a href="/mylists">My Tasks</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            {% else %}
+            <ul>
+                <li><a href="https://calendar.google.com" target="_blank">Calendar</a></li>
+                <li><a href="#" id="reg-login">Sign Up/Login</a></li>
+            </ul>
+            {% endif %}
+        </nav>
+    </header>
+    <p class="intro">The laid back task manager</p>
+    <section id="form-container" class="hidden">
+        <button class="close-form">X</button>
+        <div class="form signup-form">
+            <h2>Sign up</h2>
+            <form method="POST" action="/register">
+                {{ signup_form.hidden_tag() }}
+                {% for field in signup_form if field.widget.input_type != 'hidden' %}
+                    {{ field }}
+                    {{ field.label }}
+                    {% for error in field.errors %}
+                    <p> {{ error }} </p>
+                    {% endfor %}
+                {% endfor %}
+                <button>Create Account</button>
+            </form>
+        </div>
+        <hr>
+        <div class="form login-form">
+            <h2>Log In</h2>
+            <form method="POST" action="/login">
+                {{ login_form.hidden_tag() }}
+                {% for field in login_form if field.widget.input_type != 'hidden' %}
+                    {{ field }}
+                    {{ field.label }}
+                    {% for error in field.errors %}
+                    <p> {{ error }} </p>
+                    {% endfor %}
+                {% endfor %}
+                <button>Log In</button>
+            </form>
+        </div>
+    </section>
 
-    <h1>TranquiList</h1>
-
-    {% if g.user %}
-    <a href="/mylists">My Tasks</a>
-    <a href="/logout">Logout</a>
-    {% else %}
-    <a href="/register">Sign Up</a>
-    <a href="/login">Login</a>
-    {% endif %}
-    <p>The laid back task manager app</p>
 {% endblock %}
