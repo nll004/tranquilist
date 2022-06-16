@@ -1,6 +1,158 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    background-color: rgb(208, 208, 208);
+}
+
+header {
+    position: relative;
+    background-color: rgb(176, 176, 176);
+}
+
+nav {
+    margin-left: 20%;
+}
+
+h2 {
+    margin: 2% 5%;
+    font-size: 2.5rem;
+}
+
+blockquote {
+    margin-bottom: 2%;
+}
+
+.quote {
+    position: relative;
+    width: 70%;
+    left: 15%;
+    padding: 1% 2%;
+    border: 1px solid rgb(30, 105, 105);
+    border-radius: 10px;
+    box-shadow: 3px 3px grey;
     background-color: rgb(234, 234, 234);
+    text-align: center;
+}
+
+#grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2%;
+}
+
+/* ====================================================== */
+/* -----------------  Task column  ---------------------- */
+/* ====================================================== */
+h3 {
+    padding: 2% 5%;
+    margin-left: 2%;
+    margin-top: 2%;
+    background-color: rgb(30, 105, 105);
+    border: 2px solid black;
+    border-style: none solid solid none;
+    border-radius: 10px;
+    font-size: 2rem;
+    color: whitesmoke;
+    box-shadow: 3px 3px grey;
+}
+
+/* Adapted from https://stackoverflow.com/questions/55281672/make-plus-symbol-in-css answer by Temani Afif */
+.h3-btn {
+    position: absolute;
+    right: 0%;
+    display:inline-block;
+    width:50px;
+    height:50px;
+    background:
+        linear-gradient(whitesmoke 0 0),
+        linear-gradient(whitesmoke 0 0);
+    background-position:center;
+    background-size: 50% 5px, 5px 50%; /*thickness = 2px, length = 50% (25px)*/
+    background-repeat:no-repeat;
+    border: none;
+}
+
+li {
+    background-color: whitesmoke;
+    width: 94%;
+    margin-left: 5%;
+    padding: 0 0 5px 5%;
+    font-size: 1.5rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 2px 2px grey;
+}
+
+/* .add-subtask-btn {
+    position: absolute;
+    display:inline-block;
+    width:30px;
+    height:30px;
+    background:
+        linear-gradient(rgb(100, 100, 100) 0 0),
+        linear-gradient(rgb(100, 100, 100) 0 0);
+    background-position:center;
+    background-size: 50% 5px, 5px 50%; /*thickness = 2px, length = 50% (25px)*/
+    /* background-repeat:no-repeat;
+    border: none;
+} */
+
+/* .del-task-btn {
+    position: absolute;
+    right: 2%;
+    top: 10%;
+    display:inline-block;
+    width:30px;
+    height:30px;
+    background:
+        linear-gradient(rgb(100, 100, 100) 0 0),
+        linear-gradient(rgba(255, 255, 255, 0) 0 0);
+    background-position:center;
+    background-size: 50% 5px, 5px 50%; thickness = 2px, length = 50% (25px) */
+    /* background-repeat:no-repeat;
+    border: none;
+} */
+
+.subtask-grp {
+    background-color: rgb(221, 221, 221);
+    width: 90%;
+    margin-left: 8%;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 2px 2px grey;
+}
+
+.subtask {
+    display: block;
+    font-size: 1rem;
+    color: black;
+}
+
+.details {
+    background-color: transparent;
+    margin-left: 6%;
+    color: rgb(134, 134, 134);
+}
+
+.complete-True {
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+
+/* ============================================================ */
+/* ------------------- Calendar Column -------------------------*/
+/* ============================================================ */
+.cal-anchor {
+
+}
+
+.cal-event {
+
+}
+
+.date {
+
+}
+
+.time {
+
 }

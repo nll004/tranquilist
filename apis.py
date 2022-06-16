@@ -56,6 +56,7 @@ def get_calendar_events():
         while True:
             user_events = service.events().list(calendarId='primary', timeMin=now_str, timeMax=next_week_str,
                                                 singleEvents=True, orderBy='startTime', pageToken=next_page_token).execute()
+
             for event in user_events['items']:
                 all_events.append(event)
             next_page_token = user_events.get('nextPageToken')
@@ -68,9 +69,6 @@ def get_calendar_events():
                                                 singleEvents=True, orderBy='startTime').execute()
         if public_events:
             for event in public_events['items']:
-                # added holiday to object to help distinguish it from other events
-                # event['holiday'] = True
-                # print(event)
                 all_events.append(event)
         else:
             return
@@ -87,20 +85,24 @@ def get_quote():
 
     base_url = "https://motivational-quotes1.p.rapidapi.com/motivation"
 
-    payload = {
-		"key1": "value",
-		"key2": "value"
-	}
+    try:
+        payload = {
+	        "key1": "value",
+	        "key2": "value"
+	    }
 
-    headers = {
-		"content-type": "application/json",
-		"X-RapidAPI-Host": "motivational-quotes1.p.rapidapi.com",
-        "X-RapidAPI-Key": quote_API_key
-	}
+        headers = {
+	        "content-type": "application/json",
+	        "X-RapidAPI-Host": "motivational-quotes1.p.rapidapi.com",
+            "X-RapidAPI-Key": quote_API_key
+	    }
 
-    response = request("POST", base_url, json=payload, headers=headers)
+        response = request("POST", base_url, json=payload, headers=headers)
 
-    return response
+        return response
+
+    except:
+        return
 
 
 if __name__ == '__main__':

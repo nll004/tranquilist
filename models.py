@@ -65,7 +65,7 @@ class TimeLine(db.Model):
 
 
 class Task(db.Model):
-    '''Subtasks in lists'''
+    '''Subtasks located in tasklists'''
 
     __tablename__ = 'tasks'
 
@@ -77,7 +77,7 @@ class Task(db.Model):
 
 
 class TaskList(db.Model):
-    '''Task lists that are located somewhere on the to do timeline and can also hold individual tasks'''
+    '''Task lists that are located somewhere on the to do timeline and can also hold individual subtasks'''
 
     __tablename__ = 'task_lists'
 

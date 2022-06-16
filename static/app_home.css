@@ -1,9 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Trattatello', cursive;
-}
-
 body {
     /* setting and postitioning background image */
     background-image: url('tranquilist_home.jpg');
@@ -11,67 +5,31 @@ body {
     background-repeat: no-repeat;
 }
 
-header {
-    position: absolute;
-    width: 100%;
-}
-
-h1 {
-    padding: 5% 10% 0;
-    width: 30%;
-    display: inline-block;
-    font-size: 4rem;
-    font-weight: 600;
-    text-shadow: 1px 1px whitesmoke;
-}
-
-span {
-    font-style: italic;
-}
-
-nav {
-    display: inline-block;
-    width: fit-content;
-    padding-left: 10%;
-}
-
-li, a {
-    display: inline-block;
-    padding: 0 10px;
-    text-decoration: none;
-    font-size: 2rem;
-    font-weight: bolder;
-    color: rgb(30, 105, 105);
-    text-shadow: 1px 1px whitesmoke;
-}
-
 .intro {
     position: absolute;
     width: 50%;
     text-align: center;
-    top: 45%;
+    top: 250px;
     left: 25%;
     font-size: 2rem;
     font-weight: 400;
     text-shadow: none;
 }
 
-.hidden {
-    display: none;
-}
-
 #form-container {
     position: fixed;
     top: 30%;
-    left: 25%;
-    width: 50vw;
+    left: 30%;
+    width: 40vw;
     background-color: rgb(200, 183, 160);
     border: 3px solid darkslategray;
+    box-shadow: 5px 5px rgba(120, 120, 120, 0.792);
     border-radius: 10px;
 }
 
 h2 {
     margin-left: 5%;
+    text-shadow: 1px 1px whitesmoke;
 }
 
 input {

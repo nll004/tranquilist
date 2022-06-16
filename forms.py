@@ -1,5 +1,6 @@
+from models import TimeLine
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, TextAreaField, PasswordField
+from wtforms import StringField, SelectField, TextAreaField, PasswordField, HiddenField, BooleanField
 from wtforms.validators import InputRequired, Length, EqualTo
 
 
@@ -22,15 +23,25 @@ class AuthenticateForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired(), Length(min=8)])
 
 
-class TaskForm(FlaskForm):
-    '''Form for creating and editing a task'''
+class NewTasklistForm(FlaskForm):
+    '''Form for creating a tasklist'''
 
-    item = StringField()
-    details = TextAreaField()
-    list_id = SelectField
+    name = StringField('Task Name', validators=[InputRequired(), Length(max=30)])
+    timeline = HiddenField('timeline_id', validators=[InputRequired(message="Something went wrong with your submission")])
 
-class NewList(FlaskForm):
-    '''Form for creating and editing a list'''
+class EditTasklistForm(FlaskForm):
+    '''Form for editing a tasklist'''
 
-    name = StringField()
-    # sublist = SelectField() REq only on forms not db
+    name = StringField('Task name', validators=[InputRequired(), Length(max=30)])
+    time_line_id = SelectField('Timeline', choices=[(1, "Today"), (2, "Soon"), (3, "Later")])
+    # time_line_id = SelectField('Timeline', choices = [(t.id, t.name) for t in TimeLine.query.all()])
+    # RuntimeError: No application found. Either work inside a view function or push an application context. See http://flask-sqlalchemy.pocoo.org/contexts/.
+    complete = BooleanField('Check if complete')
+
+
+class SubtaskForm(FlaskForm):
+    '''Form for creating and editing a subtask within a tasklist'''
+
+    name = StringField('Name', validators=[InputRequired(), Length(max=30)])
+    details = TextAreaField('Details', validators=[Length(max=100, message='Details cannot exceed 100 characters')])
+    list_id = HiddenField('list_id', validators=[InputRequired(message='Something went wrong with your submission')])
