@@ -1,8 +1,4 @@
-/delete
-credentials.json
 /venv
 /__pycache__
-token.json
-/keys.py
-/tests
 /secret
+/tests

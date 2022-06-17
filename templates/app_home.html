@@ -22,38 +22,39 @@
     </header>
     <p class="intro">The laid back task manager</p>
 
-
-    <section id="form-container" class="hidden">
-        <button class="close-form">X</button>
-        <div class="form signup-form">
-            <h2>Sign up</h2>
-            <form method="POST" action="/register">
-                {{ signup_form.hidden_tag() }}
-                {% for field in signup_form if field.widget.input_type != 'hidden' %}
-                    {{ field }}
-                    {{ field.label }}
-                    {% for error in field.errors %}
-                    <p> {{ error }} </p>
+    {% if not g.user %}
+        <section id="form-container" class="hidden">
+            <button class="close-form">X</button>
+            <div class="form signup-form">
+                <h2>Sign up</h2>
+                <form method="POST" action="/register">
+                    {{ signup_form.hidden_tag() }}
+                    {% for field in signup_form if field.widget.input_type != 'hidden' %}
+                        {{ field }}
+                        {{ field.label }}
+                        {% for error in field.errors %}
+                        <p> {{ error }} </p>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-                <button>Create Account</button>
-            </form>
-        </div>
-        <hr>
-        <div class="form login-form">
-            <h2>Log In</h2>
-            <form method="POST" action="/login">
-                {{ login_form.hidden_tag() }}
-                {% for field in login_form if field.widget.input_type != 'hidden' %}
-                    {{ field }}
-                    {{ field.label }}
-                    {% for error in field.errors %}
-                    <p> {{ error }} </p>
+                    <button>Create Account</button>
+                </form>
+            </div>
+            <hr>
+            <div class="form login-form">
+                <h2>Log In</h2>
+                <form method="POST" action="/login">
+                    {{ login_form.hidden_tag() }}
+                    {% for field in login_form if field.widget.input_type != 'hidden' %}
+                        {{ field }}
+                        {{ field.label }}
+                        {% for error in field.errors %}
+                        <p> {{ error }} </p>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-                <button>Log In</button>
-            </form>
-        </div>
-    </section>
+                    <button>Log In</button>
+                </form>
+            </div>
+        </section>
+    {% endif %}
 
 {% endblock %}
