@@ -151,6 +151,9 @@ def show_user_home():
 def create_tasklist():
 	'''Save a new tasklist to database'''
 
+	# if g.user.username == route username:
+		# then post, patch, delete
+	# e
 	form = NewTasklistForm()
 
 	if form.validate_on_submit():

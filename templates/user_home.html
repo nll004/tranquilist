@@ -1,80 +1,81 @@
 {% extends 'base.html' %}
 
 {% block head_content %}
-<link rel="stylesheet" href="/static/navbar.css">
-<link rel="stylesheet" href="/static/user_home.css">
+    <link rel="stylesheet" href="/static/navbar.css">
+    <link rel="stylesheet" href="/static/user_home.css">
 {% endblock %}
 
 {% block page_title %} My TranquiList {% endblock %}
 
 {% block page_content %}
     <header>
-        <h1>Tranqui<span>List</span></h1>
+        <h1>Tranqui<span class="h1span">List</span></h1>
         <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/logout">Log Out</a></li>
-            </ul>
+           <a class='navlink usernav' href="/">Home</a></li>
+           <a class='navlink usernav' href="/logout">Log Out</a>
         </nav>
     </header>
-    <h2>Welcome {{ user.fname }}</h2>
-    {% if quote.text %}
-        <blockquote>
-            <p class="quote"> {{ quote.text }} </p>
-        </blockquote>
-    {% endif %}
-    <div id="grid-container">
-        <div>
-            {% for timeline in timelines %}
+    <main>
+        <h2>Welcome {{ user.fname }}</h2>
+        {% if quote.text %}
+            <blockquote>
+                <p id="quote"> {{ quote.text }} </p>
+            </blockquote>
+        {% endif %}
+        <div id="grid-container">
+            <div>
+                {% for timeline in timelines %}
+                    <section>
+                        <h3 id="{{ timeline.id }}"> {{ timeline.name }}
+                            <!-- <button class="h3-btn"></button> -->
+                        </h3>
+                        <ul>
+                            {% for list in user.lists %}
+                                {% if list.time_line_id == timeline.id %}
+                                    <li class="item complete-{{list.complete}}" id="{{list.id}}">{{ list.name }}
+                                        <!-- <button class="add-subtask-btn"></button>
+                                        <button class="del-task-btn"></button> -->
+                                    </li>
+                                        {% if list.subtasks %}
+                                            <ul class="subtask-grp">
+                                            {% for task in list.subtasks %}
+                                                 <li class="subtask complete-{{task.complete}}"> > {{ task.name }}
+                                                    {% if task.details %}
+                                                    <span class="details">: {{ task.details }}</span>
+                                                    {% endif %}
+                                                </li>
+                                            {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </section>
+                {% endfor %}
+            </div>
+            <div>
                 <section>
-                    <h3 id="{{ timeline.id }}"> {{ timeline.name }}
-                        <button class="h3-btn"></button>
-                    </h3>
+                    <h3>Calendar</h3>
                     <ul>
-                        {% for list in user.lists %}
-                            {% if list.time_line_id == timeline.id %}
-                                <li class="primary-task complete-{{list.complete}}" id="{{list.id}}">{{ list.name }}
-                                    <button class="add-subtask-btn"></button>
-                                    <button class="del-task-btn"></button>
-                                </li>
-                                    {% if list.subtasks %}
-                                        <ul class="subtask-grp">
-                                        {% for task in list.subtasks %}
-                                             <li class="subtask complete-{{task.complete}}"> > {{ task.name }}
-                                                {% if task.details %}
-                                                <span class="details">: {{ task.details }}</span>
-                                                {% endif %}
-                                            </li>
-                                        {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                            {% endif %}
+                        {% for event in events %}
+                            <li class="item"> <span>{{ event['newStart'].date }}</span>
+                                {% if event['newStart'].time %}
+                                    <span class="time"> @ {{ event['newStart'].time }}</span>
+                                {% endif %}
+                            </li>
+                            <li class="subtask-grp cal-event">
+                                <a class="item cal-anchor" href="{{ event['htmlLink']}}" target="_blank" >
+                                    {{event['summary'] }}
+                                </a>
+                            </li>
+
                         {% endfor %}
                     </ul>
                 </section>
-            {% endfor %}
+            </div>
         </div>
-        <div>
-            <section>
-                <h3>Calendar</h3>
-                <ul>
-                    {% for event in events %}
-                        <li> <span class="date">{{ event['newStart'].date }}</span>
-                            {% if event['newStart'].time %}
-                                <span class="time">{{ event['newStart'].time }}</span>
-                            {% endif %}
-                        </li>
-                        <li class="cal-event">
-                            <a href="{{ event['htmlLink']}}" target="_blank" class="cal-anchor">
-                                {{event['summary'] }}
-                            </a>
-                        </li>
 
-                    {% endfor %}
-                </ul>
-            </section>
-        </div>
-    </div>
+    </main>
     <div id="form-container">
         <form method="POST" action="/tasks/new" class="new-tasklist hidden">
             <h5>Create Task</h5>

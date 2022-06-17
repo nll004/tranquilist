@@ -9,22 +9,20 @@
 
 {% block page_content %}
     <header>
-        <h1>Tranqui<span>List</span></h1>
+        <h1>Tranqui<span class="h1span">List</span></h1>
         <nav>
             {% if g.user %}
-            <ul>
-                <li><a href="/mylists">My Tasks</a></li>
-                <li><a href="/logout">Logout</a></li>
-            </ul>
+                <a class="navlink" href="/mylists">My Tasks</a>
+                <a class="navlink" href="/logout">Logout</a>
             {% else %}
-            <ul>
-                <li><a href="https://calendar.google.com" target="_blank">Calendar</a></li>
-                <li><a href="#" id="reg-login">Sign Up/Login</a></li>
-            </ul>
+                <a class="navlink" href="https://calendar.google.com" target="_blank">Calendar</a>
+                <a class="navlink" href="#" id="reg-login">Sign Up/Login</a>
             {% endif %}
         </nav>
     </header>
     <p class="intro">The laid back task manager</p>
+
+
     <section id="form-container" class="hidden">
         <button class="close-form">X</button>
         <div class="form signup-form">

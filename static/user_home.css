@@ -1,26 +1,31 @@
-* {
+body {
     background-color: rgb(208, 208, 208);
 }
 
 header {
-    position: relative;
-    background-color: rgb(176, 176, 176);
+    background: rgb(55,62,65);
+    background: linear-gradient(90deg, rgba(55,62,65,1) 2%, rgba(80,88,90,1) 8%,
+        rgba(101,148,153,1) 22%, rgba(30,135,135,1) 46%, rgba(53,91,107,1) 85%,
+        rgba(54,73,82,1) 95%, rgba(55,62,65,1) 100%);
+    border-bottom: 5px solid rgb(21, 74, 74);
+    box-shadow: 5px 5px grey;
 }
 
-nav {
-    margin-left: 20%;
+.usernav {
+    /* anchors in user_home.html header navbar */
+    color: rgb(0, 69, 69);
 }
 
 h2 {
     margin: 2% 5%;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
 }
 
 blockquote {
     margin-bottom: 2%;
 }
 
-.quote {
+#quote {
     position: relative;
     width: 70%;
     left: 15%;
@@ -41,6 +46,11 @@ blockquote {
 /* ====================================================== */
 /* -----------------  Task column  ---------------------- */
 /* ====================================================== */
+.complete-True {
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.5);
+}
+
 h3 {
     padding: 2% 5%;
     margin-left: 2%;
@@ -52,10 +62,11 @@ h3 {
     font-size: 2rem;
     color: whitesmoke;
     box-shadow: 3px 3px grey;
+    text-shadow: 2px 2px black;
 }
 
 /* Adapted from https://stackoverflow.com/questions/55281672/make-plus-symbol-in-css answer by Temani Afif */
-.h3-btn {
+/* .h3-btn {
     position: absolute;
     right: 0%;
     display:inline-block;
@@ -66,16 +77,17 @@ h3 {
         linear-gradient(whitesmoke 0 0);
     background-position:center;
     background-size: 50% 5px, 5px 50%; /*thickness = 2px, length = 50% (25px)*/
-    background-repeat:no-repeat;
+    /* background-repeat:no-repeat;
     border: none;
-}
+} */
 
 li {
+    display: inline-block;
     background-color: whitesmoke;
     width: 94%;
     margin-left: 5%;
     padding: 0 0 5px 5%;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     border: 1px solid black;
     border-radius: 5px;
     box-shadow: 2px 2px grey;
@@ -115,44 +127,34 @@ li {
     background-color: rgb(221, 221, 221);
     width: 90%;
     margin-left: 8%;
-    border: 1px solid black;
-    border-radius: 5px;
+    /* border: 1px solid black; */
     box-shadow: 2px 2px grey;
 }
 
 .subtask {
-    display: block;
+    /* undoing previous changes */
+    background-color: transparent;
+    border: none;
+    box-shadow: 0px 2px grey;
     font-size: 1rem;
-    color: black;
+
 }
 
 .details {
-    background-color: transparent;
-    margin-left: 6%;
     color: rgb(134, 134, 134);
 }
-
-.complete-True {
-    text-decoration: line-through;
-    color: rgba(0, 0, 0, 0.4);
-}
-
 
 /* ============================================================ */
 /* ------------------- Calendar Column -------------------------*/
 /* ============================================================ */
 .cal-anchor {
-
+    color: rgb(30, 105, 105);
 }
 
 .cal-event {
-
-}
-
-.date {
-
+    border-radius: 0%;
 }
 
 .time {
-
+    margin-left: 5%;
 }
