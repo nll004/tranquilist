@@ -5,7 +5,7 @@ from datetime import datetime
 from apis import get_calendar_events, get_quote
 from models import TaskList, TimeLine, connect_db, db, User, Task
 from forms import AddUserForm, AuthenticateForm, EditTasklistForm, NewTasklistForm, SubtaskForm
-from keys import secret_key
+from secret.keys import secret_key
 
 app = Flask(__name__)
 
@@ -111,15 +111,14 @@ def show_user_home():
 		return redirect('/')
 
 	time_lines = TimeLine.query.all()
-	# forms
-	add_task_form = NewTasklistForm()
-	add_subtask_form = SubtaskForm()
-	edit_tasklist_form = EditTasklistForm()
 
+	# get quote and calendar events
 	quote = get_quote()
 
-	calendar_events = get_calendar_events()
-	# format dates into a dateTime obj for use on user_home.html
+	# pass user into get_calendar_events to retrieve 1 week of personal google calendar events
+	calendar_events = get_calendar_events(g.user)
+
+	# format dates into a dateTime obj and add to calendar event obj as "newStart"
 	for event in calendar_events:
 
 		if event['start'].get('dateTime'):
@@ -136,6 +135,14 @@ def show_user_home():
 			newStart = {'date': date}
 
 		event['newStart'] = newStart
+
+	# html forms =============================
+	add_task_form = NewTasklistForm()
+	add_subtask_form = SubtaskForm()
+	edit_tasklist_form = EditTasklistForm()
+	# ========================================
+
+
 
 	return render_template('user_home.html', quote = quote,
 						events = calendar_events, user=g.user,
