@@ -171,6 +171,8 @@ def create_tasklist():
 
 		return redirect('/mylists')
 
+	else:
+		return redirect('/')
 
 @app.route('/tasks/edit', methods=['POST'])
 def edit_tasklist():
@@ -182,9 +184,7 @@ def edit_tasklist():
 	form = EditTasklistForm()
 
 	if form.validate_on_submit():
-		print(form.data)
 		task = TaskList.query.get(form.edit_tasklist_id.data)
-		print(task.name)
 		task.time_line_id = form.tasklist_timeline_id.data
 		task.name = form.edit_tasklist_name.data
 

@@ -26,14 +26,12 @@
             <div>
                 {% for timeline in timelines %}
                     <section>
-                        <h3 id="{{ timeline.id }}"> {{ timeline.name }}
-                            <!-- <button class="h3-btn"></button> -->
-                        </h3>
+                        <h3 id="{{ timeline.id }}"> {{ timeline.name }} </h3>
                         <ul>
                             {% for list in user.lists %}
                                 {% if list.time_line_id == timeline.id %}
                                     <li class="item complete-{{list.complete}}" id="{{list.id}}">{{ list.name }}
-                                        <a href="/tasks/{{list.id}}/del">X</a>
+                                        <a href="/tasks/{{list.id}}/del" id="task-del-btn">X</a>
                                     </li>
                                         {% if list.subtasks %}
                                             <ul class="subtask-grp">
