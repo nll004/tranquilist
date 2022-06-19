@@ -77,11 +77,11 @@ def user_sign_up():
 
 	if form.validate_on_submit():
 		# Create user, hash password and store in database
-		user = User.register_user(username=form.username.data,
+		user = User.register_user(username=form.new_username.data,
 								fname=form.fname.data,
 								lname=form.lname.data,
 								email=form.email.data,
-								pwd=form.password.data)
+								pwd=form.new_password.data)
 		db.session.add(user)
 		db.session.commit()
 
@@ -140,9 +140,8 @@ def show_user_home():
 	add_task_form = NewTasklistForm()
 	add_subtask_form = SubtaskForm()
 	edit_tasklist_form = EditTasklistForm()
+	# edit_subtask_form =
 	# ========================================
-
-
 
 	return render_template('user_home.html', quote = quote,
 						events = calendar_events, user=g.user,
@@ -151,36 +150,66 @@ def show_user_home():
 
 
 # =============================================================================
-#                Manage Tasks
+#                Manage TaskList and Subtasks
 # =============================================================================
 
 @app.route('/tasks/new', methods=['POST'])
 def create_tasklist():
-	'''Save a new tasklist to database'''
+	'''Create new tasklists'''
 
-	# if g.user.username == route username:
-		# then post, patch, delete
-	# e
+	if not g.user:
+		return redirect('/')
+
 	form = NewTasklistForm()
 
 	if form.validate_on_submit():
-
-		tasklist = TaskList(name=form.name.data,
-						time_line_id= form.timeline.data,
+		tasklist = TaskList(name=form.new_tasklist_name.data,
+						time_line_id= form.tasklist_timeline.data,
 						user_username=g.user.username)
 		db.session.add(tasklist)
 		db.session.commit()
 
 		return redirect('/mylists')
 
-# @app.route('/tasks/<int:task_id>/edit', methods=['POST'])
-# def edit_tasklist(task_id):
-# 	'''Select a task and edit'''
 
-# 	return
+@app.route('/tasks/edit', methods=['POST'])
+def edit_tasklist():
+	'''Select a task and edit'''
+
+	if not g.user:
+		return redirect('/')
+
+	form = EditTasklistForm()
+
+	if form.validate_on_submit():
+		print(form.data)
+		task = TaskList.query.get(form.edit_tasklist_id.data)
+		print(task.name)
+		task.time_line_id = form.tasklist_timeline_id.data
+		task.name = form.edit_tasklist_name.data
+
+		db.session.add(task)
+		db.session.commit()
+
+	return redirect('/mylists')
 
 
+@app.route('/tasks/<int:task_id>/del')
+def delete_tasklist(task_id):
+	'''Delete selected task list. This should also remove all related subtasks'''
 
+	if not g.user:
+		return redirect('/')
+
+	task = TaskList.query.get(task_id)
+
+	db.session.delete(task)
+	db.session.commit()
+
+	return redirect('/mylists')
+
+
+# ==================== Subtasks =========================
 
 @app.route('/tasks/subtask/new', methods=['POST'])
 def create_subtask():
@@ -190,10 +219,25 @@ def create_subtask():
 
 	if form.validate_on_submit():
 
-		subtask = Task(name=form.name.data,
-						details=form.details.data or None,
-						list_id= form.list_id.data)
+		subtask = Task(name=form.subtask_name.data,
+						details=form.subtask_details.data or None,
+						list_id= form.tasklist_id.data)
 		db.session.add(subtask)
 		db.session.commit()
 
 		return redirect('/mylists')
+
+
+# @app.route('/tasks/subtask/<int:subtask_id>/del')
+# def delete_subtask(subtask_id):
+# 	'''Delete subtask from tasklist'''
+
+# 	if not g.user:
+# 		return redirect('/')
+
+# 	subtask = Task.query.get(subtask_id)
+
+# 	db.session.delete(subtask)
+# 	db.session.commit()
+
+# 	return redirect('/mylists')

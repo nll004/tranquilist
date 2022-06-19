@@ -33,8 +33,7 @@
                             {% for list in user.lists %}
                                 {% if list.time_line_id == timeline.id %}
                                     <li class="item complete-{{list.complete}}" id="{{list.id}}">{{ list.name }}
-                                        <!-- <button class="add-subtask-btn"></button>
-                                        <button class="del-task-btn"></button> -->
+                                        <a href="/tasks/{{list.id}}/del">X</a>
                                     </li>
                                         {% if list.subtasks %}
                                             <ul class="subtask-grp">
@@ -74,49 +73,51 @@
                 </section>
             </div>
         </div>
-
     </main>
     <div id="form-container">
-        <form method="POST" action="/tasks/new" class="new-tasklist hidden">
-            <h5>Create Task</h5>
-            {{ task_form.hidden_tag() }}
-            {% for field in task_form if field.widget.input_type != 'hidden' %}
-                {{ field.label }}
-                {{ field }}
-                {% for error in field.errors %}
-                <p> {{ error }} </p>
+        <div id="main-tasks-forms" class="hidden">
+            <form method="POST" action="/tasks/new">
+                <h5>Create Task</h5>
+                {{ task_form.hidden_tag() }}
+                {% for field in task_form if field.widget.input_type != 'hidden' %}
+                    {{ field.label }}
+                    {{ field }}
+                    {% for error in field.errors %}
+                    <p> {{ error }} </p>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-            <input type="submit" value="Create">
-            <button class="">Cancel</button>
-        </form>
-        <form method="POST" action="/tasks/subtask/new" class="subtask-form hidden">
-            <h5>Create Subtask</h5>
-            {{ subtask_form.hidden_tag() }}
-            {% for field in subtask_form if field.widget.input_type != 'hidden' %}
-                {{ field.label }}
-                {{ field }}
-                {% for error in field.errors %}
-                <p> {{ error }} </p>
+                <input type="submit" value="Create">
+                <button id="cancel-tasklist">Cancel</button>
+            </form>
+        </div>
+        <div id="edit-main-tasks" class="hidden">
+            <form action="/tasks/edit" method="POST">
+                <h5>Edit Task</h5>
+                {{ edit_tasklist_form.hidden_tag() }}
+                {% for field in edit_tasklist_form if field.widget.input_type != 'hidden' %}
+                    {{ field.label }}
+                    {{ field }}
+                    {% for error in field.errors %}
+                    <p> {{ error }} </p>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-            <input type="submit" value="Create">
-            <button class="">Cancel</button>
-        </form>
-        <form action="/tasks/1/edit", method="POST" class="edit-tasklist-form">
-            <h5>Edit Task</h5>
-            {{ edit_tasklist_form.hidden_tag() }}
-            {% for field in edit_tasklist_form if field.widget.input_type != 'hidden' %}
-                {{ field.label }}
-                {{ field }}
-                {% for error in field.errors %}
-                <p> {{ error }} </p>
+                <input type="submit" value="Save">
+            </form>
+            <hr>
+            <form method="POST" action="/tasks/subtask/new">
+                <h5>Create Subtask</h5>
+                {{ subtask_form.hidden_tag() }}
+                {% for field in subtask_form if field.widget.input_type != 'hidden' %}
+                    {{ field.label }}
+                    {{ field }}
+                    {% for error in field.errors %}
+                    <p> {{ error }} </p>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-            <input type="submit" value="Save">
-            <button class="">Cancel</button>
-        </form>
+                <input type="submit" value="Create">
+            </form>
+            <hr>
+            <button id="close-tasklist-form">Cancel</button>
+        </div>
     </div>
-
-
 {% endblock %}

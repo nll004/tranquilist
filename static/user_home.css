@@ -66,9 +66,8 @@ h3 {
 }
 
 /* Adapted from https://stackoverflow.com/questions/55281672/make-plus-symbol-in-css answer by Temani Afif */
-/* .h3-btn {
+.h3-btn {
     position: absolute;
-    right: 0%;
     display:inline-block;
     width:50px;
     height:50px;
@@ -76,10 +75,10 @@ h3 {
         linear-gradient(whitesmoke 0 0),
         linear-gradient(whitesmoke 0 0);
     background-position:center;
-    background-size: 50% 5px, 5px 50%; /*thickness = 2px, length = 50% (25px)*/
-    /* background-repeat:no-repeat;
+    background-size: 50% 5px, 5px 50%; /* thickness = 2px, length = 50% (25px) */
+    background-repeat:no-repeat;
     border: none;
-} */
+}
 
 li {
     display: inline-block;
@@ -93,7 +92,7 @@ li {
     box-shadow: 2px 2px grey;
 }
 
-/* .add-subtask-btn {
+.add-subtask-btn {
     position: absolute;
     display:inline-block;
     width:30px;
@@ -103,25 +102,25 @@ li {
         linear-gradient(rgb(100, 100, 100) 0 0);
     background-position:center;
     background-size: 50% 5px, 5px 50%; /*thickness = 2px, length = 50% (25px)*/
-    /* background-repeat:no-repeat;
+    background-repeat:no-repeat;
     border: none;
-} */
+}
 
-/* .del-task-btn {
+.del-task-btn {
     position: absolute;
-    right: 2%;
+    right: 10%;
     top: 10%;
-    display:inline-block;
+    display: inline-block;
     width:30px;
     height:30px;
     background:
         linear-gradient(rgb(100, 100, 100) 0 0),
         linear-gradient(rgba(255, 255, 255, 0) 0 0);
     background-position:center;
-    background-size: 50% 5px, 5px 50%; thickness = 2px, length = 50% (25px) */
-    /* background-repeat:no-repeat;
+    background-size: 50% 5px, 5px 50%; /* thickness = 2px, length = 50% (25px) */
+    background-repeat:no-repeat;
     border: none;
-} */
+}
 
 .subtask-grp {
     background-color: rgb(221, 221, 221);
