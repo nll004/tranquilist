@@ -1,6 +1,4 @@
-from calendar import calendar
 from flask import Flask, flash, render_template, redirect, session, g
-from requests import request
 from datetime import datetime
 from apis import get_calendar_events, get_quote
 from models import TaskList, TimeLine, connect_db, db, User, Task
@@ -136,6 +134,10 @@ def show_user_home():
 
 		event['newStart'] = newStart
 
+	print('Calendar events ==================')
+	sorted_calendar_events = sorted(calendar_events, key=lambda x: datetime.strptime(x['newStart']['date'], '%a %m/%d'))
+	print(sorted_calendar_events)
+
 	# html forms =============================
 	add_task_form = NewTasklistForm()
 	add_subtask_form = SubtaskForm()
@@ -144,7 +146,7 @@ def show_user_home():
 	# ========================================
 
 	return render_template('user_home.html', quote = quote,
-						events = calendar_events, user=g.user,
+						events = sorted_calendar_events, user=g.user,
 						timelines=time_lines, task_form=add_task_form,
 						subtask_form=add_subtask_form, edit_tasklist_form= edit_tasklist_form)
 
@@ -173,6 +175,7 @@ def create_tasklist():
 
 	else:
 		return redirect('/')
+
 
 @app.route('/tasks/edit', methods=['POST'])
 def edit_tasklist():
