@@ -70,7 +70,7 @@ class Task(db.Model):
     __tablename__ = 'tasks'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String(35), nullable=False)
     details = db.Column(db.String(100), nullable=True)
     complete = db.Column(db.Boolean, default=False, nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey('task_lists.id', ondelete='CASCADE'), nullable=False)
@@ -82,7 +82,7 @@ class TaskList(db.Model):
     __tablename__ = 'task_lists'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String(35), nullable=False)
     complete = db.Column(db.Boolean, default=False, nullable=False)
     time_line_id = db.Column(db.Integer, db.ForeignKey('time_lines.id'), default=3, nullable=False)
     user_username = db.Column(db.Text, db.ForeignKey('users.username', ondelete='CASCADE'), nullable=False)
