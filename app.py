@@ -229,18 +229,3 @@ def create_subtask():
 		db.session.commit()
 
 		return redirect('/mylists')
-
-
-# @app.route('/tasks/subtask/<int:subtask_id>/del')
-# def delete_subtask(subtask_id):
-# 	'''Delete subtask from tasklist'''
-
-# 	if not g.user:
-# 		return redirect('/')
-
-# 	subtask = Task.query.get(subtask_id)
-
-# 	db.session.delete(subtask)
-# 	db.session.commit()
-
-# 	return redirect('/mylists')
