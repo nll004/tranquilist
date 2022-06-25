@@ -39,6 +39,7 @@ $('h3').click(function(e){
 
 // strikethrough tasks when complete and collapse subtasks
 $('.item').click(function(e){
+
     $(this).toggleClass('complete-True')
     $(this).nextUntil('li').toggleClass('hidden')
 })

@@ -1,5 +1,6 @@
 from flask import Flask, flash, render_template, redirect, session, g
 from datetime import datetime
+
 from apis import get_calendar_events, get_quote
 from models import TaskList, TimeLine, connect_db, db, User, Task
 from forms import AddUserForm, AuthenticateForm, EditTasklistForm, NewTasklistForm, SubtaskForm
@@ -37,24 +38,21 @@ def add_user_to_g():
 def user_login():
 	'''Handle authentication and login'''
 
-	form = AuthenticateForm()
+	login_form = AuthenticateForm()
 
-	# validates CSRF token
-	if form.validate_on_submit():
-		username = form.username.data
-		password = form.password.data
-
-		# checks user password with hashed pwd in database
+		# validates CSRF token
+	if login_form.validate_on_submit():
+		username = login_form.username.data
+		password = login_form.password.data
+		#  checks user password with hashed pwd in database
 		user = User.authenticate(username=username, pwd=password)
 
 		if user:
 			# stores username to session
 			login(user.username)
 			return redirect("/mylists")
-		else:
-			form.username.errors = ["Incorrect username or password"]
 
-	return
+	return render_template('error.html', err="Incorrect username/pwd")
 
 
 @app.route('/logout')
@@ -71,27 +69,40 @@ def logout():
 def user_sign_up():
 	'''Accepts new user registration form and creates new user'''
 
+	# sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "users_pkey"
+	# DETAIL:  Key (username)=(nll004) already exists.
+
 	form = AddUserForm()
 
 	if form.validate_on_submit():
 		# Create user, hash password and store in database
-		user = User.register_user(username=form.new_username.data,
+		try:
+			user = User.register_user(username=form.new_username.data,
 								fname=form.fname.data,
 								lname=form.lname.data,
 								email=form.email.data,
 								pwd=form.new_password.data)
-		db.session.add(user)
-		db.session.commit()
+			db.session.add(user)
+			db.session.commit()
 
-		# add username to session
-		login(user.username)
+		except:
+			db.session.rollback()
 
-		return redirect('/mylists')
+			# form.new_username.errors = 'Trying this out'
+			print('Issue with registration')
+			return render_template('error.html', err='Use another username or email address')
+
+		if user:
+			# add username to session
+			login(user.username)
+			return redirect('/mylists')
+
+
 	return redirect('/')
 
 
 @app.route('/')
-def display_home():
+def display_app_home():
 	'''Display home page for new users'''
 
 	signup_form = AddUserForm()
@@ -104,7 +115,7 @@ def display_home():
 def show_user_home():
 	'''User page after logging in. Show tasks and events.'''
 
-	# if correct user then display page else redirect to login
+	# if user then display page else redirect to login
 	if not g.user:
 		return redirect('/')
 
@@ -134,16 +145,12 @@ def show_user_home():
 
 		event['newStart'] = newStart
 
-	print('Calendar events ==================')
 	sorted_calendar_events = sorted(calendar_events, key=lambda x: datetime.strptime(x['newStart']['date'], '%a %m/%d'))
-	print(sorted_calendar_events)
 
-	# html forms =============================
+	# generated html forms =============================
 	add_task_form = NewTasklistForm()
 	add_subtask_form = SubtaskForm()
 	edit_tasklist_form = EditTasklistForm()
-	# edit_subtask_form =
-	# ========================================
 
 	return render_template('user_home.html', quote = quote,
 						events = sorted_calendar_events, user=g.user,

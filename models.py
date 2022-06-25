@@ -31,18 +31,25 @@ class User(db.Model):
 
         hashed_pwd = bcrypt.generate_password_hash(pwd).decode('utf8')
 
-        return cls(username=username, fname=fname,
+        new_user = User(username=username, fname=fname,
                     lname=lname, email=email, hashed_pwd=hashed_pwd)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return new_user
 
     @classmethod
     def authenticate(cls, username, pwd):
         '''Authenticate user to make sure username is valid and pwd is correct'''
 
         user = User.query.filter_by(username=username).first()
-        correct_pwd = bcrypt.check_password_hash(user.hashed_pwd, pwd)
+
+        if user:
+            correct_pwd = bcrypt.check_password_hash(user.hashed_pwd, pwd)
 
         if user and correct_pwd:
             return user
+
         else:
             return False
 

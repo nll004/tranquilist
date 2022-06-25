@@ -144,8 +144,8 @@ li {
 #edit-main-tasks {
     position: fixed;
     width: 40%;
-    height: 70%;
-    top: 20%;
+    height: 80%;
+    top: 10%;
     left: 30%;
     background-color: whitesmoke;
     border: 3px solid rgb(30, 105, 105);
@@ -177,6 +177,7 @@ label {
 button {
     position: absolute;
     right: 10%;
+    font-size: 1rem;
     border: none;
     background-color: none;
 }
