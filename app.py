@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, redirect, session, g
+from flask import Flask, render_template, redirect, session, g
 from datetime import datetime
 
 from apis import get_calendar_events, get_quote
@@ -69,9 +69,6 @@ def logout():
 def user_sign_up():
 	'''Accepts new user registration form and creates new user'''
 
-	# sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "users_pkey"
-	# DETAIL:  Key (username)=(nll004) already exists.
-
 	form = AddUserForm()
 
 	if form.validate_on_submit():
@@ -88,15 +85,12 @@ def user_sign_up():
 		except:
 			db.session.rollback()
 
-			# form.new_username.errors = 'Trying this out'
-			print('Issue with registration')
 			return render_template('error.html', err='Use another username or email address')
 
 		if user:
 			# add username to session
 			login(user.username)
 			return redirect('/mylists')
-
 
 	return redirect('/')
 

@@ -5,13 +5,14 @@
 <link rel="stylesheet" href="/static/app_home.css">
 {% endblock %}
 
-{% block page_title %} Tranquilist {% endblock %}
+{% block page_title %} Error {% endblock %}
 
 {% block page_content %}
-<nav>
-    <a href="/">Home</a>
-</nav>
-<h1>Error</h1>
-<p>{{ err }}</p>
-
+    <header>
+        <h1>Tranqui<span class="h1span">L</span>ist</h1>
+        <nav>
+            <a class='navlink' href="/">Back to Sign Up/In</a>
+        </nav>
+    </header>
+    <p class="intro">{{ err }}. Please try again.</p>
 {% endblock %}

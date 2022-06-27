@@ -17,12 +17,11 @@ h1 {
     display: inline-block;
     width: 60%;
     font-size: 4rem;
-    font-style: italic;
-
 }
 
+
 .h1span {
-    text-shadow: 1px 1px whitesmoke;
+    font-style: italic;
 }
 
 nav {
