@@ -6,10 +6,16 @@ from models import TaskList, TimeLine, connect_db, db, User, Task
 from forms import AddUserForm, AuthenticateForm, EditTasklistForm, NewTasklistForm, SubtaskForm
 from secret.keys import secret_key
 import os
+import re
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///tranquilist'
+uri = os.environ.get('DATABASE_URL', 'postgresql:///tranquilist')
+
+if uri.startswith("postgres://"):
+ 	uri = uri.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', secret_key)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
