@@ -17,6 +17,9 @@ Google Calendar API: https://developers.google.com/calendar/api
 
 Motivational Quote API: https://rapidapi.com/bitbiscuit-bitbiscuit-default/api/motivational-quotes1/details
 
+
+
+
 ## To Do
 - At a later date I plan to introduce more features like editing, completing, deleting subtasks.
 - Additional tests and error handling are needed to improve user experience.

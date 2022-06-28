@@ -5,11 +5,12 @@ from apis import get_calendar_events, get_quote
 from models import TaskList, TimeLine, connect_db, db, User, Task
 from forms import AddUserForm, AuthenticateForm, EditTasklistForm, NewTasklistForm, SubtaskForm
 from secret.keys import secret_key
+import os
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///tranquilist'
-app.config['SECRET_KEY'] = secret_key
+app.config['SECRET_KEY'] = os.eviron.get('SECRET_KEY', secret_key)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 
