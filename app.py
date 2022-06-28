@@ -10,7 +10,7 @@ import os
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///tranquilist'
-app.config['SECRET_KEY'] = os.eviron.get('SECRET_KEY', secret_key)
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', secret_key)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 
