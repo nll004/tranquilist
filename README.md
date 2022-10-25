@@ -5,7 +5,7 @@ Started: June 2022
 ## About
 Written task lists often get misplaced, outdated and messy. Other task management apps often come with cluttered displays, annoying alerts and reminders as well as strict timelines that many find impractical and annoying for everyday tasks.
 
-Being obsessed with organization and task lists yet often irritated by constant reminders and alerts, I’ve reimagined my task list to provide a place to store everyday tasks while still utilizing the Google Calendar for events that require exact timing.
+Being obsessed with organization and task lists yet often perturbed by constant reminders and alerts, I’ve reimagined my task list to provide a place to store everyday tasks while still utilizing the Google Calendar for events that require exact timing.
 
 This app allows users to register, create/edit/delete task and connect their account to google calendar api.
 
