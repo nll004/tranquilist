@@ -28,3 +28,5 @@ Motivational Quote API: https://rapidapi.com/bitbiscuit-bitbiscuit-default/api/m
 - At a later date I plan to introduce more features like editing, completing, deleting subtasks. Additional features needed include editing the users username, password, email, etc.
 - More tests and error handling are needed to improve user experience.
 - Improving and refactoring existing code and styling
+
+[![HitCount](https://hits.dwyl.com/nll004/tranquilist.svg?style=flat-square)](http://hits.dwyl.com/nll004/tranquilist)
