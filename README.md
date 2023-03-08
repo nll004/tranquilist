@@ -1,10 +1,10 @@
-# TranquiList
-[![HitCount](https://hits.dwyl.com/nll004/tranquilist.svg?style=flat-square)](http://hits.dwyl.com/nll004/tranquilist)
+![tranquilist-logo3](https://user-images.githubusercontent.com/96667141/223807066-085c52ed-3b45-4822-9245-cf48e3c184ea.png)
 
 Written task lists often get misplaced, outdated and messy. Other task management apps often come with cluttered displays, annoying alerts and reminders as well as strict timelines that many find impractical and annoying for everyday tasks.
 
 I’ve reimagined the task list to provide a place to store everyday tasks while utilizing the [Google Calendar API](https://developers.google.com/calendar/api) to retrieve events stored in a users calendar.
 
+[![HitCount](https://hits.dwyl.com/nll004/tranquilist.svg?style=flat-square)](http://hits.dwyl.com/nll004/tranquilist)
 ## Table of Contents
 - [Features](#features)
   - [Register User](#register-new-user)
